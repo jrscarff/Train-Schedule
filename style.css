@@ -1,0 +1,9 @@
+.jumbotron {
+	background-color: black;
+	color: white;
+	text-align: center;
+}
+
+#table-headers {
+	font-weight: bolder;
+}
