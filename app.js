@@ -1,10 +1,10 @@
 var config = {
-    apiKey: "AIzaSyDmB-tG2duDhOxylkNxxhx6HD70tfdTYJw",
-    authDomain: "fir-time-644aa.firebaseapp.com",
-    databaseURL: "https://fir-time-644aa.firebaseio.com",
-    projectId: "fir-time-644aa",
-    storageBucket: "fir-time-644aa.appspot.com",
-    messagingSenderId: "668876946692"
+    apiKey: "AIzaSyAOqBR5wxLRUx2qGIR1W1gneZhRAmMoaqY",
+    authDomain: "train-schedule-65741.firebaseapp.com",
+    databaseURL: "https://train-schedule-65741.firebaseio.com",
+    projectId: "train-schedule-65741",
+    storageBucket: "train-schedule-65741.appspot.com",
+    messagingSenderId: "1008733668462"
   };
 
   firebase.initializeApp(config);
@@ -16,32 +16,26 @@ var current = moment().format("YYYY-MM-DD");
     var years = parseInt(array[0]);
     var months = parseInt(array[1]);
     var days = parseInt(array[2]);
-  var employeeName = "";
-  var employeeRole = "";
-  var employeeStart = "";
-  var employeeWorked = 0;
-  var employeeRate = 0;
-  var employeeBilled = 0;
+  var trainName = "";
+  var trainDestination = "";
+  var trainStart = "";
+  var trainFrequency = 0;
 
 $("#submit-button").on("click", function() {
 
 	event.preventDefault();
 
-	employeeName = $("#name-input").val().trim();
-	employeeRole = $("#role-input").val().trim();
-	employeeStart = $("#date-input").val().trim();
-	employeeRate = $("#rate-input").val().trim();
+	trainName = $("#name-input").val().trim();
+	trainDestination = $("#role-input").val().trim();
+	trainStart = $("#date-input").val().trim();
+	trainFrequency = $("#rate-input").val().trim();
 
-console.log(employeeName);
-console.log(employeeRole);
-console.log(employeeStart);
-console.log(employeeRate);
 
 	database.ref().push({
-		name: employeeName,
-		role: employeeRole,
-		start: employeeStart,
-		rate: employeeRate
+		name: trainName,
+		destination: trainDestination,
+		start: trainStart,
+		frequency: trainFrequency
 	})
 
 	$("#name-input").val("");
@@ -50,7 +44,6 @@ console.log(employeeRate);
 	$("#rate-input").val("");
 });
 
-var allEmployees = 
 
 // for (var i = 0; i < )
 
@@ -81,11 +74,10 @@ database.ref().on("child_added", function(snapshot) {
 
 
 	newRow.append("<td>" + addRow.name + "</td>");
-	newRow.append("<td>" + addRow.role + "</td>");
-	newRow.append("<td>" + addRow.start + "</td>");
-	newRow.append("<td>" + resultMonths + "</td>");
-	newRow.append("<td>" + addRow.rate + "</td>");
-	newRow.append("<td>" + owed + "</td>")
+	newRow.append("<td>" + addRow.destination + "</td>");
+	newRow.append("<td>" + addRow.frequency + "</td>");
+	newRow.append("<td></td>");
+	newRow.append("<td></td>");
 	// newRow.append(newData);
 	$("#employee-row").append(newRow);
   });

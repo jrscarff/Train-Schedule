@@ -10,31 +10,30 @@
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
-<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.9.1/firebase.js"></script>
 <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="jumbotron">
-                <h1>Employee Data Management</h1>
-                <p>A Comprehensive Directory of Employee Billable Hours</p>
+                <h1>Train Schedule</h1>
+                <p>A Comprehensive Directory of Upcoming Trains</p>
             </div>
         </div>
         <div class="row">
             <div class="panel panel-default">
                 <!-- Default panel contents -->
-                <div class="panel-heading">Current Employees</div>
+                <div class="panel-heading">Current Train Schedule</div>
                 <!-- Table -->
                 <table class="table" id="current-employees">
                     <thead>
                     <tr>
-                        <th id="table-headers">Employee Name</th>
-                        <th id="table-headers">Role</th>
-                        <th id="table-headers">Start Date</th>
-                        <th id="table-headers">Months Worked</th>
-                        <th id="table-headers">Monthly Rate ($)</th>
-                        <th id="table-headers">Total Billed ($)</th>
+                        <th id="table-headers">Train Name</th>
+                        <th id="table-headers">Destination</th>
+                        <th id="table-headers">Frequency</th>
+                        <th id="table-headers">Next Arrival</th>
+                        <th id="table-headers">Minutes Away</th>
                     </tr>
                 </thead>
                 <tbody id="employee-row">
@@ -46,24 +45,24 @@
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Add Employee</h3>
+                    <h3 class="panel-title">Add Train</h3>
                 </div>
                 <div class="panel-body" id="add-employees">
                     <form>
                         <div class="form-group">
-                            <label for="name-input">Employee Name</label>
+                            <label for="name-input">Train Name</label>
                             <input type="text" class="form-control" id="name-input" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="role-input">Role</label>
+                            <label for="role-input">Destination</label>
                             <input type="text" class="form-control" id="role-input" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="date-input">Start Date</label>
-                            <input type="date" class="form-control" id="date-input" placeholder="">
+                            <label for="date-input">First Train Time (HH:mm - Military Time)</label>
+                            <input type="text" class="form-control" id="date-input" placeholder="">
                         </div>
                         <div class="form-group">
-                            <label for="rate-input">Monthly Rate</label>
+                            <label for="rate-input">Frequency</label>
                             <input type="number" class="form-control" id="rate-input" placeholder="">
                         </div>
                         <button type="submit" class="btn btn-default" id="submit-button">Submit</button>
