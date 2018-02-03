@@ -11,11 +11,10 @@ var config = {
 
   var database = firebase.database();
 
-var current = moment().format("YYYY-MM-DD");
-    var array = current.split("-");
-    var years = parseInt(array[0]);
-    var months = parseInt(array[1]);
-    var days = parseInt(array[2]);
+var current = moment().format("HH:mm");
+    var array = current.split(":");
+    var hours = parseInt(array[0]);
+    var minutes = parseInt(array[1]);
   var trainName = "";
   var trainDestination = "";
   var trainStart = "";
@@ -55,29 +54,74 @@ database.ref().on("child_added", function(snapshot) {
 	var addRow = snapshot.val();
 
 	var startDate = addRow.start;
-	var startArray = startDate.split("-");
-	var startYears = parseInt(startArray[0]);
-	var startMonths = parseInt(startArray[1]);
-	var startDays = parseInt(startArray[2]);
 
-	var resultYears = years - startYears;
-	var resultMonths = months - startMonths;
-	var resultDays = days - startDays;
+	var startArray = startDate.split(":");
+	var startHours = parseInt(startArray[0]);
+	var startMinutes = parseInt(startArray[1]);
 
-	var resultYears = resultYears * 12;
-	var resultDays = resultDays / 30;
-	var resultMonths = resultYears + resultMonths;
-	var resultMonths = resultDays + resultMonths;
-	//var resultMonths = round(resultMonths, 2);
-	var owed = resultMonths * parseInt(addRow.rate);
-	//var owed = round(owed, 2);
+	var resultHours = startHours - hours;
+	var resultMinutes = startMinutes - minutes;
+
+	var nextTrain = startDate;
+
+
+	var resultHours = resultHours * 60;
+	var resultMinutes = resultHours + resultMinutes;
+
+	function nextArrival() {
+			if (resultMinutes < 0) {
+				resultMinutes += parseInt(addRow.frequency);
+				startMinutes += parseInt(addRow.frequency);
+				nextArrival();
+			}
+			else if (resultMinutes > parseInt(addRow.frequency)) {
+				resultMinutes -= parseInt(addRow.frequency);
+				startMinutes -= parseInt(addRow.frequency);
+				nextArrival();
+			}
+			else if (startMinutes >= 60) {
+				startHours += 1;
+				startMinutes -= 60;
+				if (startHours > 24) {
+					startHours -= 24;
+				}
+				nextArrival();
+			}
+			else if (startMinutes < 0) {
+				startHours -= 1;
+				startMinutes += 60;
+				if (startHours < 0) {
+					startHours += 24;
+				}
+				nextArrival();
+			}
+		}
+
+	nextArrival()
+
+	startMinutes = String(startMinutes);
+	console.log(startMinutes.length);
+
+	if (startMinutes.length === 1) {
+		startMinutes = "0" + startMinutes;
+	}
+
+	if (startHours > 12) {
+		startHours -= 12;
+		nextTrain = String(startHours) + ":" + startMinutes + " PM";
+	}
+	else {
+		nextTrain = String(startHours) + ":" + startMinutes + " AM";
+		console.log(startMinutes);
+	}
+	
 
 
 	newRow.append("<td>" + addRow.name + "</td>");
 	newRow.append("<td>" + addRow.destination + "</td>");
 	newRow.append("<td>" + addRow.frequency + "</td>");
-	newRow.append("<td></td>");
-	newRow.append("<td></td>");
+	newRow.append("<td>" + nextTrain + "</td>");
+	newRow.append("<td>" + resultMinutes + "</td>");
 	// newRow.append(newData);
 	$("#employee-row").append(newRow);
   });
