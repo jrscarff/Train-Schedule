@@ -100,19 +100,20 @@ database.ref().on("child_added", function(snapshot) {
 	nextArrival()
 
 	startMinutes = String(startMinutes);
-	console.log(startMinutes.length);
 
 	if (startMinutes.length === 1) {
 		startMinutes = "0" + startMinutes;
 	}
 
-	if (startHours > 12) {
+	if (startHours === 12) {
+		nextTrain = String(startHours) + ":" + startMinutes + " PM";
+	}
+	else if (startHours >= 13) {
 		startHours -= 12;
 		nextTrain = String(startHours) + ":" + startMinutes + " PM";
 	}
 	else {
 		nextTrain = String(startHours) + ":" + startMinutes + " AM";
-		console.log(startMinutes);
 	}
 	
 
