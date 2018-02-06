@@ -7,18 +7,18 @@ var config = {
     messagingSenderId: "1008733668462"
   };
 
-  firebase.initializeApp(config);
+firebase.initializeApp(config);
 
-  var database = firebase.database();
+var database = firebase.database();
 
 var current = moment().format("HH:mm");
-    var array = current.split(":");
-    var hours = parseInt(array[0]);
-    var minutes = parseInt(array[1]);
-  var trainName = "";
-  var trainDestination = "";
-  var trainStart = "";
-  var trainFrequency = 0;
+var array = current.split(":");
+var hours = parseInt(array[0]);
+var minutes = parseInt(array[1]);
+var trainName = "";
+var trainDestination = "";
+var trainStart = "";
+var trainFrequency = 0;
 
 $("#submit-button").on("click", function() {
 
@@ -44,13 +44,11 @@ $("#submit-button").on("click", function() {
 });
 
 
-// for (var i = 0; i < )
-
 database.ref().on("child_added", function(snapshot) {
 
 
 	var newRow = $("<tr>");
-	//var newData = $("<td>");
+	
 	var addRow = snapshot.val();
 
 	var startDate = addRow.start;
@@ -123,9 +121,7 @@ database.ref().on("child_added", function(snapshot) {
 	newRow.append("<td>" + addRow.frequency + "</td>");
 	newRow.append("<td>" + nextTrain + "</td>");
 	newRow.append("<td>" + resultMinutes + "</td>");
-	// newRow.append(newData);
+	
 	$("#employee-row").append(newRow);
   });
 
-
-// .orderByChild("dateAdded")
